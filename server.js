@@ -8,6 +8,9 @@ server.get('/', (req, res) => {
 
 //custom middleware
 
-function logger(req, res, next) {}
+function logger(req, res, next) {
+  const time = new Date().toISOString()
+  console.log(`${req.ip} ${req.method} ${req.url}`)
+}
 
 module.exports = server;
