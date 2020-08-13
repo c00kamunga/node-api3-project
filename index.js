@@ -14,5 +14,5 @@ server.use('/', postRouter, userRouter)
 
 
 server.listen(port, () => {
-    console.log(`\n *** server is listening on port ${port} *** \n`)
+    console.log(`\n *** server is listening on http://localhost:${port} *** \n`)
 })
