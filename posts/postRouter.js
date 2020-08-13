@@ -2,9 +2,22 @@ const express = require('express');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  // do your magic!
+///////////////////////////////////////////////
+
+router.get('/', async (req, res) => {
+  try {
+    const posts = await postDb.get()
+    res
+    .status(200)
+    .json(posts)
+  } catch(error) {
+    res
+    .status(500)
+    .json({ error: "Theposts information could not be retrieved" })
+  }
 });
+
+///////////////////////////////////////////////////
 
 router.get('/:id', (req, res) => {
   // do your magic!

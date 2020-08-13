@@ -3,6 +3,8 @@ const userDb = require('./userDb');
 
 const router = express.Router();
 
+////////////////////////////////////////////////////
+
 router.post('/', (req, res) => {
   if(req.body.name) {
     const newUser = db.insert({name: req.body.name})
@@ -22,9 +24,13 @@ router.post('/', (req, res) => {
     }
 });
 
+//////////////////////////////////////////////////////
+
 router.post('/:id/posts', (req, res) => {
   // do your magic!
 });
+
+///////////////////////////////////////////////////
 
 router.get('/', async (req, res) => {
   try {
@@ -36,6 +42,9 @@ router.get('/', async (req, res) => {
     .json({ error: "The user information could not be retrieved" })
   }
 });
+
+
+//////////////////////////////////////////////////
 
 router.get('/:id', (req, res) => {
   // do your magic!
@@ -59,9 +68,14 @@ router.get('/:id', (req, res) => {
   }
 });
 
+
+/////////////////////////////////////////////////////
+
 router.get('/:id/posts', (req, res) => {
   // do your magic!
 });
+
+//////////////////////////////////////////////////////
 
 router.delete('/:id', (req, res) => {
   const id = req.params.id
@@ -80,6 +94,9 @@ res.status(500).json({ errorMessage: "This does not work!" })
     .json({ errorMessage: "The user ID does not exist" })
   }
 });
+
+
+/////////////////////////////////////////////////////////
 
 router.put('/:id', (req, res) => {
   const updateUser = req.body
