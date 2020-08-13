@@ -82,7 +82,27 @@ res.status(500).json({ errorMessage: "This does not work!" })
 });
 
 router.put('/:id', (req, res) => {
-  // do your magic!
+  const updateUser = req.body
+  const id = req.params.id
+  const userID = userDb.update(id)
+
+  if(!userID) {
+    res.status(404)
+    .json({ errorMessage: "User ID does not exist" })
+  } else if(!updatedUser.name) {
+    res
+    .status(400)
+    .json({ errorMessage: "Please edit the name of the user" })
+  } else if(userID) {
+    userDb.update(userID, updatedUser)
+    res
+    .status(200)
+    .json(updatedUser)
+  } else {
+    res
+    .status(500)
+    .json({ errorMessage: "There was an issue with the server" })
+  }
 });
 
 //custom middleware
