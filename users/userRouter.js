@@ -1,5 +1,6 @@
 const express = require('express');
 const userDb = require('./userDb');
+const postDb = require('../posts/postDb');
 
 const router = express.Router();
 
@@ -27,7 +28,29 @@ router.post('/', (req, res) => {
 //////////////////////////////////////////////////////
 
 router.post('/:id/posts', (req, res) => {
-  // do your magic!
+  if (!req.body.text) {
+    res
+    .status(400)
+    .json({ errorMessage: "Please provide text for the post" })
+  } else if (req.body.post_id !== Number(req.params.id)) {
+    res
+    .status(400)
+    .json({ message: "The specified post ID does not match the request ID." })
+  } else if (!postDb.getById(req.params.id)) {
+    res
+    .status(404)
+    .json({ message: "The post with the specified ID does not exist." })
+  } else {
+    postDb.insert(req.body)
+    .then(newPost => {
+      return res
+      .status(201)
+      .json(newComment)
+    })
+    .catch(error => {
+      error: "There was an error while saving the post to the database "
+    })
+  }
 });
 
 ///////////////////////////////////////////////////
