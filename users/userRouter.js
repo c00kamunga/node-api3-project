@@ -69,26 +69,29 @@ router.get('/', async (req, res) => {
 
 //////////////////////////////////////////////////
 
-router.get('/:id', (req, res) => {
+router.get('/:id', validateUserId(), (req, res) => {
+  res
+  .status(200)
+  .json(req.user)
   // do your magic!
-  const id = req.params.id
-  const user = userDb.getById(id)
+  // const id = req.params.id
+  // const user = userDb.getById(id)
 
-  if(user) {
-    try {
-      res
-      .json(user)
-    } 
-    catch(error) {
-      res
-      .status(500)
-      .json ({ errorMessage: "User information could not be found" })
-    }
-  } else {
-    res
-    .status(404)
-    .json({ message: "user with specified ID does not exist" })
-  }
+  // if(user) {
+  //   try {
+  //     res
+  //     .json(user)
+  //   } 
+  //   catch(error) {
+  //     res
+  //     .status(500)
+  //     .json ({ errorMessage: "User information could not be found" })
+  //   }
+  // } else {
+  //   res
+  //   .status(404)
+  //   .json({ message: "user with specified ID does not exist" })
+  // }
 });
 
 
@@ -162,11 +165,33 @@ router.put('/:id', (req, res) => {
   }
 });
 
-//custom middleware
+///////////////////custom middleware
 
 function validateUserId(req, res, next) {
   // do your magic!
+  const id = req.params.id
+  const user = userDb.getById(id)
+
+  if(user) {
+    try {
+      //attach the user data to the request
+      //so we can access it later
+      req.user = user
+      next()
+    } 
+    catch(error) {
+      res
+      .status(500)
+      .json ({ errorMessage: "User information could not be found" })
+    }
+  } else {
+    res
+    .status(404)
+    .json({ message: "user with specified ID does not exist" })
+  }
 }
+
+//////////////////////////////////////////////////////////////
 
 function validateUser(req, res, next) {
   // do your magic!
